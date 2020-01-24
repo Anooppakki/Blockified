@@ -1,0 +1,47 @@
+{
+  "Student": [
+    {
+      "id": 1,
+      "name": "gaurav",
+      "password": "test",
+      "certificates": "typicode",
+      "certificatesCount": 1
+    }
+  ],
+  "Certificate": [
+    {
+      "id": 1,
+      "title": "some comment",
+      "student": 1,
+      "img": "some comment",
+      "status": "some comment",
+      "institue": "aa"
+    }
+  ],
+  "Institute": [
+    {
+      "id": "typicode",
+      "name": "typicode",
+      "password": "typicode",
+      "field": "typicode"
+    },
+    {
+      "id": "typicode",
+      "name": "typicode",
+      "password": "typicode",
+      "field": "typicode"
+    },
+    {
+      "id": "typicode",
+      "name": "typicode",
+      "password": "typicode",
+      "field": "typicode"
+    }
+  ],
+  "Employer": {
+    "id": "",
+    "name": "",
+    "password": "",
+    "field": ""
+  }
+}
