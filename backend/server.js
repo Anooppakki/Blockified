@@ -14,19 +14,36 @@ app.use(bodyParser.json());
 app.use("/", express.static("public_static"));
 
 app.get("/getCand", (req, res) => {
-    console.log("**** GET /getAccounts ****");
-    truffle_connect.getCandidate(function(answer) {
-        res.send(answer);
-    });
+  console.log("**** GET /getAccounts ****");
+  truffle_connect.getCandidate(function(answer) {
+    res.send(answer);
+  });
+});
+
+app.post("/addInst", (req, res) => {
+  console.log("**** GET /addInst ****");
+  let name = req.body.name;
+  let password = req.body.password;
+  let field = req.body.field;
+  truffle_connect.addInstitute(name, password, field, function(answer) {
+    res.send(answer);
+  });
+});
+
+app.get("/getAccounts", (req, res) => {
+  console.log("**** GET /getAccounts ****");
+  truffle_connect.start(function(answer) {
+    res.send(answer);
+  });
 });
 
 app.listen(port, () => {
-    // fallback - use your fallback strategy (local node / hosted node + in-dapp id mgmt / fail)
-    truffle_connect.web3 = new Web3(
-        new Web3.providers.HttpProvider("http://127.0.0.1:9545")
-    );
+  // fallback - use your fallback strategy (local node / hosted node + in-dapp id mgmt / fail)
+  truffle_connect.web3 = new Web3(
+    new Web3.providers.HttpProvider("http://127.0.0.1:9545")
+  );
 
-    console.log("Express Listening at http://localhost:" + port);
+  console.log("Express Listening at http://localhost:" + port);
 });
 
 // app.get("/getAccounts", (req, res) => {
