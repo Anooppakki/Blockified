@@ -20,13 +20,146 @@ app.get("/getCand", (req, res) => {
   });
 });
 
-app.post("/addInst", (req, res) => {
-  console.log("**** GET /addInst ****");
+app.get("/listInstitutes", (req, res) => {
+  console.log("**** GET /getInstitutes ****");
+  truffle_connect.listInstitutes(function(answer) {
+    res.send(answer);
+  });
+});
+app.get("/listStudents", (req, res) => {
+  console.log("**** GET /getStudents ****");
+  truffle_connect.listStudents(function(answer) {
+    res.send(answer);
+  });
+});
+app.get("/listEmployers", (req, res) => {
+  console.log("**** GET /getEmployers ****");
+  truffle_connect.listEmployers(function(answer) {
+    res.send(answer);
+  });
+});
+app.get("/listCertificates", (req, res) => {
+  console.log("**** GET /getCertificates ****");
+  truffle_connect.listCertificates(function(answer) {
+    res.send(answer);
+  });
+});
+app.post("/listPendingCertificates", (req, res) => {
+  console.log("**** POST /getPendingCertificates ****");
+  let instituteID = req.body.instituteID;
+  truffle_connect.listCertificates(function(answer) {
+    pending = [];
+    answer.forEach(element => {
+      if (Number(element[4]) == 0 && Number(element[5]) == instituteID)
+        pending.push(element);
+    });
+
+    res.send(pending);
+  });
+});
+app.post("/listStudentCertificates", (req, res) => {
+  console.log("**** POST /getStudentCertificates ****");
+  let studentID = req.body.studentID;
+  truffle_connect.listCertificates(function(answer) {
+    certs = [];
+    answer.forEach(element => {
+      if (Number(element[2]) == studentID) certs.push(element);
+    });
+
+    res.send(certs);
+  });
+});
+
+app.post("/addInstitute", (req, res) => {
+  console.log("**** POST /addInstitute ****");
   let name = req.body.name;
   let password = req.body.password;
   let field = req.body.field;
   truffle_connect.addInstitute(name, password, field, function(answer) {
     res.send(answer);
+  });
+});
+app.post("/addEmployer", (req, res) => {
+  console.log("**** POST /addEmployer ****");
+  let name = req.body.name;
+  let password = req.body.password;
+  let field = req.body.field;
+  truffle_connect.addEmployer(name, password, field, function(answer) {
+    res.send(answer);
+  });
+});
+app.post("/addStudent", (req, res) => {
+  console.log("**** POST /addStudent ****");
+  let name = req.body.name;
+  let password = req.body.password;
+  truffle_connect.addStudent(name, password, function(answer) {
+    res.send(answer);
+  });
+});
+app.post("/addCertificate", (req, res) => {
+  console.log("**** POST /addCertificate ****");
+  let title = req.body.title;
+  let studentID = req.body.studentID;
+  let img = req.body.img;
+  let instituteID = req.body.instituteID;
+  truffle_connect.addCertificate(title, studentID, img, instituteID, function(
+    answer
+  ) {
+    res.send(answer);
+  });
+});
+app.post("/verifyCertificate", (req, res) => {
+  console.log("**** POST /verifyCertificate ****");
+  let certificateID = req.body.certificateID;
+  truffle_connect.verifyCertificate(certificateID, function(answer) {
+    res.send(answer);
+  });
+});
+app.post("/rejectCertificate", (req, res) => {
+  console.log("**** POST /rejectCertificate ****");
+  let certificateID = req.body.certificateID;
+  truffle_connect.rejectCertificate(certificateID, function(answer) {
+    res.send(answer);
+  });
+});
+
+
+app.post("/loginStudent", (req, res) => {
+  console.log("**** POST /loginStudent ****");
+  let name = req.body.name;
+  let password = req.body.password;
+  truffle_connect.listStudents(function(answer) {
+    var user = undefined;
+    answer.forEach(element => {
+      if (element[1] == name && element[2] == password) user = element;
+    });
+    res.send(user);
+  });
+});
+
+app.post("/loginInstitute", (req, res) => {
+  console.log("**** POST /loginInstitute ****");
+  let name = req.body.name;
+  let password = req.body.password;
+  truffle_connect.listInstitutes(function(answer) {
+    var user = undefined;
+    answer.forEach(element => {
+      if (element[1] == name && element[2] == password) user = element;
+    });
+    res.send(user);
+  });
+});
+
+app.post("/loginEmployer", (req, res) => {
+  console.log("**** POST /loginEmployer ****");
+  let name = req.body.name;
+  let password = req.body.password;
+  truffle_connect.listEmployers(function(answer) {
+    var user = undefined;
+    answer.forEach(element => {
+      if (element[1] == name && element[2] == password) user = element;
+    });
+    res.send(user);
   });
 });
 

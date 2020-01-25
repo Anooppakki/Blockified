@@ -77,5 +77,220 @@ module.exports = {
         console.log(e);
         callback("Error 404");
       });
+  },
+  addEmployer: function(name, password, field, callback) {
+    var self = this;
+    Block.setProvider(self.web3.currentProvider);
+
+    var meta;
+    Block.deployed()
+      .then(function(instance) {
+        meta = instance;
+        console.log(self.web3.eth.accounts[0]);
+        return meta
+          .addEmployer(name, password, field, {
+            from: self.web3.eth.accounts[0],
+            gas: 1000000
+          })
+          .catch(err => console.log(err));
+      })
+      .then(function(value) {
+        callback(value.valueOf());
+      })
+      .catch(function(e) {
+        console.log(e);
+        callback("Error 404");
+      });
+  },
+  addStudent: function(name, password, callback) {
+    var self = this;
+    Block.setProvider(self.web3.currentProvider);
+
+    var meta;
+    Block.deployed()
+      .then(function(instance) {
+        meta = instance;
+        console.log(self.web3.eth.accounts[0]);
+        return meta
+          .addStudent(name, password, {
+            from: self.web3.eth.accounts[0],
+            gas: 1000000
+          })
+          .catch(err => console.log(err));
+      })
+      .then(function(value) {
+        callback(value.valueOf());
+      })
+      .catch(function(e) {
+        console.log(e);
+        callback("Error 404");
+      });
+  },
+  addCertificate: function(title, studentID, img, instituteID, callback) {
+    var self = this;
+    Block.setProvider(self.web3.currentProvider);
+
+    var meta;
+    Block.deployed()
+      .then(function(instance) {
+        meta = instance;
+        console.log(self.web3.eth.accounts[0]);
+        return meta
+          .addCertificate(title, studentID, img, instituteID, {
+            from: self.web3.eth.accounts[0],
+            gas: 5999999
+          })
+          .catch(err => console.log(err));
+      })
+      .then(function(value) {
+        callback(value.valueOf());
+      })
+      .catch(function(e) {
+        console.log(e);
+        callback("Error 404");
+      });
+  },
+  verifyCertificate: function(certificateID, callback) {
+    var self = this;
+    Block.setProvider(self.web3.currentProvider);
+
+    var meta;
+    Block.deployed()
+      .then(function(instance) {
+        meta = instance;
+        console.log(self.web3.eth.accounts[0]);
+        return meta
+          .verifyCertificate(certificateID, {
+            from: self.web3.eth.accounts[0],
+            gas: 1000000
+          })
+          .catch(err => console.log(err));
+      })
+      .then(function(value) {
+        callback(value.valueOf());
+      })
+      .catch(function(e) {
+        console.log(e);
+        callback("Error 404");
+      });
+  },
+  rejectCertificate: function(certificateID, callback) {
+    var self = this;
+    Block.setProvider(self.web3.currentProvider);
+
+    var meta;
+    Block.deployed()
+      .then(function(instance) {
+        meta = instance;
+        console.log(self.web3.eth.accounts[0]);
+        return meta
+          .rejectCertificate(certificateID, {
+            from: self.web3.eth.accounts[0],
+            gas: 1000000
+          })
+          .catch(err => console.log(err));
+      })
+      .then(function(value) {
+        callback(value.valueOf());
+      })
+      .catch(function(e) {
+        console.log(e);
+        callback("Error 404");
+      });
+  },
+  listInstitutes: function(callback) {
+    var self = this;
+
+    Block.setProvider(self.web3.currentProvider);
+    var meta;
+    Block.deployed()
+      .then(async function(instance) {
+        meta = instance;
+        var count = await meta.institutesCount.call();
+        console.log(count);
+        console.log("meta.institutes(i)");
+        var institutes = [];
+        for (var i = 0; i < count; i++) {
+          institutes.push(await meta.institutes(i));
+        }
+        return institutes;
+      })
+      .then(function(value) {
+        callback(value.valueOf());
+      })
+      .catch(function(e) {
+        console.log(e);
+        callback("Error 404");
+      });
+  },
+  listStudents: function(callback) {
+    var self = this;
+    Block.setProvider(self.web3.currentProvider);
+    var meta;
+    Block.deployed()
+      .then(async function(instance) {
+        meta = instance;
+        var count = await meta.studentsCount.call();
+        console.log(count);
+        var students = [];
+        for (var i = 0; i < count; i++) {
+          students.push(await meta.students(i));
+        }
+        return students;
+      })
+      .then(function(value) {
+        callback(value.valueOf());
+      })
+      .catch(function(e) {
+        console.log(e);
+        callback("Error 404");
+      });
+  },
+  listEmployers: function(callback) {
+    var self = this;
+    Block.setProvider(self.web3.currentProvider);
+    var meta;
+    Block.deployed()
+      .then(async function(instance) {
+        meta = instance;
+        var count = await meta.employersCount.call();
+        console.log(count);
+        var employers = [];
+        for (var i = 0; i < count; i++) {
+          employers.push(await meta.employers(i));
+        }
+        return employers;
+      })
+      .then(function(value) {
+        callback(value.valueOf());
+      })
+      .catch(function(e) {
+        console.log(e);
+        callback("Error 404");
+      });
+  },
+  listCertificates: function(callback) {
+    var self = this;
+
+    Block.setProvider(self.web3.currentProvider);
+    var meta;
+    Block.deployed()
+      .then(async function(instance) {
+        meta = instance;
+        var count = await meta.certificatesCount.call();
+        console.log(count);
+        var certificates = [];
+        for (var i = 0; i < count; i++) {
+          certificates.push(await meta.certificates(i));
+        }
+        return certificates;
+      })
+      .then(function(value) {
+        callback(value.valueOf());
+      })
+      .catch(function(e) {
+        console.log(e);
+        callback("Error 404");
+      });
   }
 };
