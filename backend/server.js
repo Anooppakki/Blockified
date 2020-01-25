@@ -123,17 +123,17 @@ app.post("/rejectCertificate", (req, res) => {
   });
 });
 
-
 app.post("/loginStudent", (req, res) => {
   console.log("**** POST /loginStudent ****");
   let name = req.body.name;
   let password = req.body.password;
   truffle_connect.listStudents(function(answer) {
-    var user = undefined;
+    var data = { verified: false };
     answer.forEach(element => {
-      if (element[1] == name && element[2] == password) user = element;
+      if (element[1] == name && element[2] == password)
+        data = { verified: true, user: element };
     });
-    res.send(user);
+    res.send(data);
   });
 });
 
@@ -141,10 +141,11 @@ app.post("/loginInstitute", (req, res) => {
   console.log("**** POST /loginInstitute ****");
   let name = req.body.name;
   let password = req.body.password;
-  truffle_connect.listInstitutes(function(answer) {
-    var user = undefined;
+  truffle_connect.listInstitutes(function (answer) {
+    var data = { verified: false };
     answer.forEach(element => {
-      if (element[1] == name && element[2] == password) user = element;
+      if (element[1] == name && element[2] == password)
+        data = { verified: true, user: element };
     });
     res.send(user);
   });
@@ -154,10 +155,11 @@ app.post("/loginEmployer", (req, res) => {
   console.log("**** POST /loginEmployer ****");
   let name = req.body.name;
   let password = req.body.password;
-  truffle_connect.listEmployers(function(answer) {
-    var user = undefined;
+  truffle_connect.listEmployers(function (answer) {
+    var data = { verified: false };
     answer.forEach(element => {
-      if (element[1] == name && element[2] == password) user = element;
+      if (element[1] == name && element[2] == password)
+        data = { verified: true, user: element };
     });
     res.send(user);
   });
