@@ -15,9 +15,10 @@ contract Blockified {
         uint256 id;
         string title;
         uint256 student;
-        bytes img;
+        string img;
         Status status;
         uint256 institue;
+        string studentName;
     }
 
     struct Institute {
@@ -87,7 +88,7 @@ contract Blockified {
     function addCertificate(
         string memory _title,
         uint256 _studentId,
-        bytes memory _img,
+        string memory _img,
         uint256 _institute
     ) public {
         certificates[certificatesCount] = Certificate(
@@ -96,7 +97,8 @@ contract Blockified {
             _studentId,
             _img,
             Status.PENDING,
-            _institute
+            _institute,
+            students[_studentId].name
         );
         students[_studentId].certificates[students[_studentId]
             .certificateCount] = certificatesCount;
