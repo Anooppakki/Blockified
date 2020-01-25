@@ -4,7 +4,7 @@
     <div class="container cardContainer">
       <v-card
         min-height="250"
-        max-width="344"
+        max-width="400"
         class="mx-auto"
       >
         <div class="container">
@@ -27,16 +27,32 @@
               type="password"
               required
             />
+            <div>
+
+              <v-radio-group v-model="radioGroup">
+                <v-radio
+                  key="1"
+                  label="Institute"
+                  value="1"
+                ></v-radio>
+                <v-radio
+                  key="2"
+                  label="Employer"
+                  value="2"
+                ></v-radio>
+              </v-radio-group>
+            </div>
 
             <br>
             <v-btn
               :disabled="!valid"
               color="success"
               class="mr-4"
-              @click="validate"
+              v-on:click="validate"
             >
               Login
             </v-btn>
+
             <v-btn
               :disabled="!valid"
               color="orange lighten-3"
@@ -58,16 +74,8 @@ export default {
   data: () => ({
     valid: true,
     name: '',
-    show2: false,
     pass: '',
-    select: null,
-    items: [
-      'BlockChain',
-      'AI',
-      'Web Dev',
-      'Mobile App'
-    ],
-    checkbox: false
+    radioGroup: 1
   }),
   watch: {
     name () {
@@ -80,11 +88,42 @@ export default {
 
   methods: {
     validate () {
+      console.log("validating");
       if (!this.$refs.form.validate()) {
         this.snackbar = true
         console.log('not valid')
-      } else {
-        this.$router.push({ path: '/userInstitute' })
+      } else if (this.radioGroup == 1) {
+        this.$axios.$post('http://localhost:3000/loginInstitute', {
+          params: {
+            name: this.name,
+            password: this.pass
+          }
+        })
+          .then(function (response) {
+            console.log(response);
+          })
+          .catch(function (error) {
+            console.log(error);
+          })
+          .then(function () {
+            // always executed
+          });
+      } else if (this.radioGroup == 2) {
+        this.$axios.$post('http://localhost:3000/loginEmployer', {
+          params: {
+            name: this.name,
+            password: this.pass
+          }
+        })
+          .then(function (response) {
+            console.log(response);
+          })
+          .catch(function (error) {
+            console.log(error);
+          })
+          .then(function () {
+            // always executed
+          });
       }
     },
     reset () {
