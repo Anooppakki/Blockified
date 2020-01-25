@@ -141,13 +141,13 @@ app.post("/loginInstitute", (req, res) => {
   console.log("**** POST /loginInstitute ****");
   let name = req.body.name;
   let password = req.body.password;
-  truffle_connect.listInstitutes(function (answer) {
+  truffle_connect.listInstitutes(function(answer) {
     var data = { verified: false };
     answer.forEach(element => {
       if (element[1] == name && element[2] == password)
         data = { verified: true, user: element };
     });
-    res.send(user);
+    res.send(data);
   });
 });
 
@@ -155,13 +155,13 @@ app.post("/loginEmployer", (req, res) => {
   console.log("**** POST /loginEmployer ****");
   let name = req.body.name;
   let password = req.body.password;
-  truffle_connect.listEmployers(function (answer) {
+  truffle_connect.listEmployers(function(answer) {
     var data = { verified: false };
     answer.forEach(element => {
       if (element[1] == name && element[2] == password)
         data = { verified: true, user: element };
     });
-    res.send(user);
+    res.send(data);
   });
 });
 
