@@ -1,31 +1,21 @@
 <template>
   <v-card>
-    <v-img
-      :src="img"
-      height="200px"
-    ></v-img>
     <v-card-title>
-      title
+      {{name}}
     </v-card-title>
 
     <v-card-subtitle>
-      student
+      No. of certificates : {{certCount}}
     </v-card-subtitle>
 
     <v-card-actions>
       <v-btn
         text
         color="success"
-      >Verify</v-btn>
+        v-on:click="validate"
+      >View Certificates</v-btn>
 
       <v-spacer></v-spacer>
-
-      <v-btn
-        color="error"
-        text
-      >
-        Reject
-      </v-btn>
     </v-card-actions>
   </v-card>
 </template>
@@ -37,22 +27,23 @@ export default {
       type: String,
 
     },
-    student: {
+    certCount: {
       type: String,
-
     },
-    img: {
-      type: String,
-
+    studentID: {
+      type: String
     }
   },
-
   data () {
     return {
     }
   },
   methods: {
+    validate () {
 
+      this.$router.push({ path: '/' + this.studentID })
+
+    }
   }
 }
 </script>

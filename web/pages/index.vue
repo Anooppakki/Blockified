@@ -84,7 +84,7 @@ export default {
         this.snackbar = true
         console.log('not valid')
       } else {
-        this.$router.push({ path: '/user' })
+        this.$router.push({ path: '/userInstitute' })
       }
     },
     reset () {
