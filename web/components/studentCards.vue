@@ -41,7 +41,7 @@ export default {
   methods: {
     validate () {
 
-      this.$router.push({ path: '/' + this.studentID })
+      this.$router.push({ path: '/student/' + this.studentID })
 
     }
   }

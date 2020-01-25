@@ -79,7 +79,21 @@ export default {
       if (!this.$refs.form.validate()) {
         this.snackbar = true
       } else {
-        this.$router.push({ path: '/' })
+        this.$axios.$post('http://localhost:3000/addInstitute', {
+
+          name: this.name,
+          password: "123",
+          field: this.select
+        })
+          .then(function (response) {
+            console.log(response);
+          })
+          .catch(function (error) {
+            console.log(error);
+          })
+          .then(function () {
+            // always executed
+          });
       }
     },
     reset () {

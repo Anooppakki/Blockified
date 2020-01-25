@@ -87,43 +87,41 @@ export default {
   },
 
   methods: {
-    validate () {
-      console.log("validating");
+    async validate () {
       if (!this.$refs.form.validate()) {
         this.snackbar = true
         console.log('not valid')
       } else if (this.radioGroup == 1) {
-        this.$axios.$post('http://localhost:3000/loginInstitute', {
-          params: {
-            name: this.name,
-            password: this.pass
-          }
+
+        console.log("Institute");
+        var inst = await this.$axios.$post('http://localhost:3000/loginInstitute', {
+
+          name: this.name,
+          password: this.pass
+
         })
           .then(function (response) {
-            console.log(response);
+            return (response);
           })
           .catch(function (error) {
             console.log(error);
-          })
-          .then(function () {
-            // always executed
           });
+        this.$router.push({ path: '/institute/' + inst.user[0] })
+
       } else if (this.radioGroup == 2) {
-        this.$axios.$post('http://localhost:3000/loginEmployer', {
-          params: {
-            name: this.name,
-            password: this.pass
-          }
+        var inst = await this.$axios.$post('http://localhost:3000/loginEmployer', {
+
+          name: this.name,
+          password: this.pass
+
         })
           .then(function (response) {
-            console.log(response);
+            return (response);
           })
           .catch(function (error) {
             console.log(error);
-          })
-          .then(function () {
-            // always executed
           });
+        this.$router.push({ path: '/employer/' + inst.user[0] })
       }
     },
     reset () {

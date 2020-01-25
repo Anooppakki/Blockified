@@ -5,7 +5,7 @@
   "author": "Fly Camp",
   "private": true,
   "scripts": {
-    "dev": "nuxt",
+    "dev": "nuxt --port 4000",
     "build": "nuxt build",
     "start": "nuxt start",
     "generate": "nuxt generate",
